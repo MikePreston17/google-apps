@@ -44,17 +44,21 @@
   <body>
     <div x-data="setup()" class="flex flex-col items-center justify-center">
       <div class="flex flex-center hero min-h-screen bg-base-200">
-        <div class="hero-content flex-col lg:flex-row-reverse">
+        <div class="hero-content flex-row lg:flex-row-reverse">
+          <!-- Schedule -->
           <div>
             <h1 x-text="message" class="text-5xl font-bold"></h1>
             <p x-text="workout_schedule" class="py-6 text-secondary">
               ... (if you see this, this is an error)
             </p>
-            <p>* added alpine plugins</p>
+            <ul>
+              <li>added alpine plugins</li>
+              <li>Fixed the sync (low phone batt)</li>
+            </ul>
             <div x-data="{ open: false }">
               <button @click="open = true">Expand</button>
 
-              <span x-show="open"> Content 2... </span>
+              <span x-show="open"> Content ... </span>
             </div>
 
             <a>
@@ -66,14 +70,120 @@
               </button>
             </a>
           </div>
+
+          <!-- Options -->
+          <div id="options_picker">
+            <div
+              class="bg-base-100 rounded-box col-span-3 row-span-3 mx-2 flex w-72 flex-shrink-0 flex-col justify-center gap-4 p-4 shadow-xl xl:mx-0 xl:w-full svelte-1n6ue57"
+            >
+              <div class="px-6 pt-6">
+                <div class="text-xl font-extrabold">Options ⚙️</div>
+                <div class="dropdown w-full flex-1">
+                  <div tabindex="0">
+                    <div x-show="false" class="form-control">
+                      <ul class="menu bg-base-100 w-56 p-2 rounded-box">
+                        <template x-if="true" x-for="prop in properties">
+                          <li>
+                            <a>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                                />
+                              </svg>
+                              <span x-text="prop.name" /> :
+                            </a>
+                            <span x-text="prop.value" />
+                          </li>
+                        </template>
+                      </ul>
+                    </div>
+                    <div class="form-control">
+                      <label class="label cursor-pointer"
+                        ><span class="label-text">teleportation 🌠</span>
+                        <input type="checkbox" class="toggle toggle-primary"
+                      /></label>
+                    </div>
+
+                    <div class="form-control">
+                      <label class="label cursor-pointer">
+                        <span class="label-text">invisibility 🙈 </span>
+                        <input type="checkbox" class="toggle toggle-accent" />
+                      </label>
+                    </div>
+                    <div class="form-control">
+                      <label class="label cursor-pointer"
+                        ><span class="label-text">immortality 🐉 </span>
+                        <input type="checkbox" class="toggle"
+                      /></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-control">
+                <!-- <div class="dropdown dropdown-top dropdown-end"> -->
+                <div tabindex="0">
+                  <button class="btn btn-secondary btn-block space-x-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      class="h-6 w-6 stroke-current"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      ></path>
+                    </svg>
+                    <span>Apply</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
+    <div
+      x-show="false"
+      x-cloak
+      class="bg-[#bada55] text-[22px] before:content-['Festivus']"
+    >
+      for the rest of us
+    </div>
+    <!-- <div id="mobile_padding" class="h-8"></div> -->
   </body>
+
+  <style>
+    #mobile_padding {
+      /* height: 40px; */
+      border: 1px red solid;
+    }
+    [x-cloak] {
+      display: none !important;
+    }
+  </style>
   <script>
     function setup() {
       return {
         message: "Have a great Workout! 🏋️‍♂️ ",
+
+        properties: {
+          prop1: { name: "A", value: 2.0 },
+          prop2: { name: "B", value: 2.0 },
+          prop3: { name: "C", value: 2.0 },
+        },
         workout_schedule: `
         
         Treadmill	Leg Press	#	Lunges	#	Air Squats	#	Sit-ups	#	Pushups	#	Plank	#	Lats	#	Dumbell Rows	#	Dumbell Thrusters	#	DSP	#
